@@ -9,6 +9,7 @@ function ToDoList() {
 
   return (
     <div>
+      <div>current state of task: {task}</div>
       <input
         type="text"
         value={task}
