@@ -12,16 +12,28 @@ const counter = (state = 0, action) => {
     }
   };
   
-  const tasks = (state = [], action) => {
-    switch (action.type) {
-      case 'ADD_TASK':
-        return [...state, action.payload];
-      case 'REMOVE_TASK':
-        return state.filter((task) => task.id !== action.payload);
-      default:
-        return state;
-    }
-  };  
+const tasks = (state = [], action) => {
+  switch (action.type) {
+    case 'ADD_TASK':
+      return [
+        ...state,
+        {
+          id: action.payload.id,
+          name: action.payload.name,
+          isDone: false, // Setel isDone ke false secara default saat menambahkan tugas
+        },
+      ];
+    case 'REMOVE_TASK':
+      return state.filter((task) => task.id !== action.payload);
+    case 'MARK_TASK_AS_DONE':
+      return state.map((task) =>
+        task.id === action.payload ? { ...task, isDone: !task.isDone } : task
+      );
+    default:
+      return state;
+  }
+};
+
 
   export default combineReducers({
     counter,
